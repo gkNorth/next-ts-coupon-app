@@ -8,8 +8,8 @@ interface Props {
 }
 
 export default function Category({ coupons } : Props) {
-  const router = useRouter();
-  const { categoryid } = router.query;
+  const router = useRouter()
+  const { categoryid } = router.query
 
   const categories = ['すべて', 'カテゴリ1', 'カテゴリ2', 'カテゴリ3']
 

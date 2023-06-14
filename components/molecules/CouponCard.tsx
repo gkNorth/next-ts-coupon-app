@@ -1,15 +1,14 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { Coupon } from 'types'
 
-export default function CouponCard(props: Coupon) {
-  const { coupon } = props
-
+export default function CouponCard({ coupon }: Coupon) {
   return (
     <>
       <li className="card">
-        <a
-          href="#"
-          className="link"
+        <Link
+          href={`/coupon/${coupon.id}`}
+          className="coupon-link"
         >
           <div className="coupon-top">
             <div className="tags">
@@ -37,7 +36,7 @@ export default function CouponCard(props: Coupon) {
             width={200}
             height={200}
           />
-        </a>
+        </Link>
       </li>
       <style jsx>{`
         .card {
@@ -48,7 +47,7 @@ export default function CouponCard(props: Coupon) {
         .card:not(:nth-child(1), :nth-child(2)) {
           margin-top: 4px
         }
-        .link {
+        :global(.coupon-link) {
           display: flex;
           flex-direction: column;
           flex-grow: 1;
