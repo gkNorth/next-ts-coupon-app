@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function CategoryAll({ categoryid = undefined, coupons, title = 'gkdev' } : Props) {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
   const brandid = searchParams.get('brandid')
 
   return (
@@ -52,4 +52,3 @@ export const getServerSideProps = async () => {
     },
   }
 }
-

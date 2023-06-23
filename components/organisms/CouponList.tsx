@@ -14,10 +14,16 @@ export default function CouponList({ categoryid = undefined, brandid = null, cou
   const displayCoupons =
     brandid ? couponFilteredByCategory.filter(v => Number(brandid) === v.brand_id) : couponFilteredByCategory
 
+  const now = new Date()
+  const descendingSortedCoupons = displayCoupons.slice().sort((a, b) => a.public_ended > b.public_ended ? 1 : -1)
+  const expiredCoupons = descendingSortedCoupons.filter(coupon => new Date(coupon.public_ended) < now)
+  const validCoupons = descendingSortedCoupons.filter(coupon => new Date(coupon.public_ended) >= now)
+  validCoupons.push(...expiredCoupons)
+
   return (
     <>
       <ul className="list">
-        {displayCoupons.map( (v, index) => {
+        {validCoupons.map( (v, index) => {
           return <CouponCard key={index} coupon={v} />
         })}
         <style jsx>{`

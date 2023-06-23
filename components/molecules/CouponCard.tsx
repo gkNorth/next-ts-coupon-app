@@ -1,11 +1,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Coupon } from 'types'
+import dayjs from 'dayjs'
 
 export default function CouponCard({ coupon }: Coupon) {
+  const now = new Date()
+  const isExpiredCoupon = new Date(coupon.public_ended) < now
   return (
     <>
-      <li className="card">
+      <li className={`card ${isExpiredCoupon ? 'isExpired' : ''}`}>
         <Link
           href={`/coupon/${coupon.id}`}
           className="coupon-link"
@@ -29,6 +32,10 @@ export default function CouponCard({ coupon }: Coupon) {
             </div>
             <p className="ttl">{coupon.title}</p>
           </div>
+          {isExpiredCoupon ?
+            <p className='expiration-date'>期限切れ</p> :
+            <p className='expiration-date'>{dayjs(coupon.public_ended).format('YYYY/MM/DD')}まで有効</p>
+          }
           <Image
             src={coupon.image.url}
             alt={coupon.title}
@@ -43,6 +50,9 @@ export default function CouponCard({ coupon }: Coupon) {
           background: #fff;
           display: flex;
           width: calc(50% - 2px);
+          &.isExpired {
+            background: #e8eaf1;
+          }
         }
         .card:not(:nth-child(1), :nth-child(2)) {
           margin-top: 4px
@@ -57,7 +67,7 @@ export default function CouponCard({ coupon }: Coupon) {
           display: flex;
           flex: 1 1 100%;
           flex-direction: column;
-          padding: 10px;
+          padding: 10px 10px 0;
         }
         .tags {
           align-items: center;
@@ -85,12 +95,16 @@ export default function CouponCard({ coupon }: Coupon) {
           overflow: hidden;
           width: 36px;
         }
+        .expiration-date {
+          color: #777;
+          font-size: 0.7rem;
+        }
         .ttl {
           color: #1a2a72;
           font-size: 0.85rem;
           font-weight: bold;
           line-height: 1.2;
-          padding-top: 10px;
+          padding: 10px 0;
         }
         :global(.coupon-img) {
           height: 62.5%;
