@@ -15,7 +15,7 @@ export default function CouponPage({coupons}: Props) {
   const router = useRouter()
   const { couponid } = router.query
 
-  const displayCoupon = coupons.find(coupon => coupon.id === couponid)
+  const displayCoupon = coupons.find(coupon => coupon.id === Number(couponid))
 
   if(!displayCoupon) {
     return <p>404ページです</p>
